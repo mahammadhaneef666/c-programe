@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+int find_gcd(int a, int b);
+int find_lcm(int a, int b);
+
+int main()
+{
+    int n, i, gcd, lcm, num;
+
+    printf("Enter the number of integers: ");
+    scanf("%d", &n);
+
+    printf("Enter %d integers: ", n);
+
+    // initialize gcd and lcm to first number
+    scanf("%d", &gcd);
+    lcm = gcd;
+
+    for (i = 1; i < n; i++)
+    {
+        scanf("%d", &num);
+
+        // find gcd and lcm of current number and previous gcd/lcm
+        gcd = find_gcd(gcd, num);
+        lcm = find_lcm(lcm, num);
+    }
+
+    printf("The GCD is %d\n", gcd);
+    printf("The LCM is %d\n", lcm);
+
+    return 0;
+}
+
+int find_gcd(int a, int b)
+{
+    // base case
+    if (b == 0)
+        return a;
+
+    // recursive case
+    return find_gcd(b, a % b);
+}
+
+int find_lcm(int a, int b)
+{
+    // LCM = (a*b)/GCD
+return (a * b) / find_gcd(a, b);
+}
