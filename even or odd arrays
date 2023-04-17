@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int main() {
+    int arr[100], evenArr[100], oddArr[100], n, i, evenCount = 0, oddCount = 0;
+    
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+    
+    printf("Enter the array elements:\n");
+    for(i=0; i<n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    // Separate even and odd elements into two arrays
+    for(i=0; i<n; i++) {
+        if(arr[i] % 2 == 0) {
+            evenArr[evenCount++] = arr[i];
+        } else {
+            oddArr[oddCount++] = arr[i];
+        }
+    }
+    
+    // Display even array
+    printf("Even Array: ");
+    for(i=0; i<evenCount; i++) {
+        printf("%d ", evenArr[i]);
+    }
+    printf("\n");
+    
+    // Display odd array
+    printf("Odd Array: ");
+    for(i=0; i<oddCount; i++) {
+        printf("%d ", oddArr[i]);
+    }
+    
+    return 0;
+}
