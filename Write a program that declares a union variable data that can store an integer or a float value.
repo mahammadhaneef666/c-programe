@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+// Define a union that can store an integer or a float value
+union data {
+    int i;
+    float f;
+};
+
+int main() {
+    union data d;
+    int choice;
+
+    printf("Enter a value of your choice:\n");
+    printf("1. Integer\n");
+    printf("2. Float\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            printf("Enter an integer value: ");
+            scanf("%d", &d.i);
+            printf("Value entered: %d\n", d.i);
+            break;
+        case 2:
+            printf("Enter a float value: ");
+            scanf("%f", &d.f);
+            printf("Value entered: %f\n", d.f);
+            break;
+        default:
+            printf("Invalid choice. Try again.\n");
+            break;
+    }
+
+    return 0;
+}
