@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+int minJumps(int arr[], int n) {
+    // If array length is 1, it's already at the end
+    if(n == 1) {
+        return 0;
+    }
+    
+    // If first element is 0, can't go further
+    if(arr[0] == 0) {
+        return -1;
+    }
+    
+    int maxReach = arr[0]; // Maximum index that can be reached from current index
+    int steps = arr[0]; // Remaining steps to be taken
+    int jumps = 1; // Number of jumps taken so far
+    
+    // Traverse the array
+    for(int i=1; i<n; i++) {
+        // If reached end of array, return number of jumps
+        if(i == n-1) {
+            return jumps;
+        }
+        
+        // Update maxReach
+        maxReach = (maxReach > i+arr[i]) ? maxReach : i+arr[i];
+        
+        // Reduce remaining steps
+        steps--;
+        
+        // If no more steps, take a jump
+        if(steps == 0) {
+            jumps++;
+            
+            // If can't reach next index, return -1
+            if(i >= maxReach) {
+                return -1;
+            }
+            
+            // Update remaining steps
+            steps = maxReach-i;
+        }
+    }
+    
+    // If couldn't reach end of array
+    return -1;
+}
+
+int main() {
+    int arr[] = {1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int jumps = minJumps(arr, n);
+    if(jumps == -1) {
+        printf("Can't reach end of array\n");
+    } else {
+        printf("Minimum number of jumps to reach end of array: %d\n", jumps);
+    }
+    return 0;
+}
