@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <time.h>
+
+struct student {
+  char name[50];
+  int roll_number;
+  struct {
+    int day;
+    int month;
+    int year;
+  } birthday;
+  struct {
+    int day;
+    int month;
+    int year;
+  } admission_date;
+};
+
+int calculate_age(struct student s) {
+  time_t now;
+  time(&now);
+
+  struct tm *admission_tm = localtime(&now);
+  admission_tm->tm_year = s.admission_date.year - 1900;
+  admission_tm->tm_mon = s.admission_date.month - 1;
+  admission_tm->tm_mday = s.admission_date.day;
+
+  struct tm *birthday_tm = localtime(&now);
+  birthday_tm->tm_year = s.birthday.year - 1900;
+  birthday_tm->tm_mon = s.birthday.month - 1;
+  birthday_tm->tm_mday = s.birthday.day;
+
+  time_t admission_time = mktime(admission_tm);
+  time_t birthday_time = mktime(birthday_tm);
+
+  double seconds = difftime(admission_time, birthday_time);
+  int age = (int) (seconds / (365.25 * 24 * 3600));
+
+  return age;
+}
+
+int main() {
+  struct student s;
+
+  // Accept student information
+  printf("Enter student name: ");
+  scanf("%s", s.name);
+
+  printf("Enter student roll number: ");
+  scanf("%d", &s.roll_number);
+
+  printf("Enter student birthday (dd mm yyyy): ");
+  scanf("%d %d %d", &s.birthday.day, &s.birthday.month, &s.birthday.year);
+
+  printf("Enter student admission date (dd mm yyyy): ");
+  scanf("%d %d %d", &s.admission_date.day, &s.admission_date.month, &s.admission_date.year);
+
+  // Calculate age at the time of admission
+  int age = calculate_age(s);
+
+  // Display student information
+  printf("\nStudent Information:\n");
+  printf("Name: %s\n", s.name);
+  printf("Roll Number: %d\n", s.roll_number);
+  printf("Birthday: %d-%d-%d\n", s.birthday.day, s.birthday.month, s.birthday.year);
+  printf("Admission Date: %d-%d-%d\n", s.admission_date.day, s.admission_date.month, s.admission_date.year);
+  printf("Age at the time of admission: %d years\n", age);
+
+  return 0;
+}
